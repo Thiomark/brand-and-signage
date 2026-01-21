@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import ServiceCard from "./components/ServiceCard";
 
 const PrinterIcon = () => (
@@ -57,18 +58,22 @@ const HomePage = () => {
     <div className="max-w-7xl mx-auto px-6 pt-10 pb-20">
       {/* Hero Images Section */}
       <div className="grid md:grid-cols-2 gap-6 mb-16">
-        <div className="rounded-2xl overflow-hidden h-80 shadow-2xl">
-          <img
-            src="https://images.pexels.com/photos/14602294/pexels-photo-14602294.jpeg?_gl=1*11gblpa*_ga*NDQ2MDI3ODMzLjE3NTEzMTAzNjg.*_ga_8JE65Q40S6*czE3NjkwMTU3OTIkbzIxJGcxJHQxNzY5MDE1ODQ0JGo4JGwwJGgw"
+        <div className="rounded-2xl overflow-hidden h-80 shadow-2xl relative">
+          <Image
+            src="https://images.pexels.com/photos/14602294/pexels-photo-14602294.jpeg"
             alt="Stickers and Prints"
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
-        <div className="rounded-2xl overflow-hidden h-80 shadow-2xl">
-          <img
-            src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800"
+        <div className="rounded-2xl overflow-hidden h-80 shadow-2xl relative">
+          <Image
+            src="https://images.unsplash.com/photo-1563245372-f21724e3856d"
             alt="Neon Signage"
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
       </div>
