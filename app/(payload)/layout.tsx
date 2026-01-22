@@ -27,6 +27,7 @@ const serverFunction = async (args: Parameters<typeof handleServerFunctions>[0])
 }
 
 const Layout = ({ children }: Args) => (
+  // @ts-expect-error - Payload CMS type mismatch with serverFunction
   <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
     {children}
   </RootLayout>
