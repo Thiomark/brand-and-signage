@@ -21,11 +21,12 @@ export const GalleryItems: CollectionConfig = {
       required: true,
     },
     {
-      name: 'imageUrl',
-      type: 'text',
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
       required: true,
       admin: {
-        description: 'Image URL (can be Cloudinary URL or external URL)',
+        description: 'Upload or select an image for this gallery item',
       },
     },
     {

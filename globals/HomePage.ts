@@ -10,29 +10,18 @@ export const HomePage: GlobalConfig = {
       name: 'heroImages',
       type: 'array',
       maxRows: 2,
+      admin: {
+        description: 'Select hero images from the Media library',
+      },
       fields: [
         {
-          name: 'imageUrl',
-          type: 'text',
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
           required: true,
           admin: {
-            description: 'Image URL (can be Cloudinary or external URL)',
+            description: 'Select an image from the Media library',
           },
-        },
-        {
-          name: 'alt',
-          type: 'text',
-          required: true,
-        },
-      ],
-      defaultValue: [
-        {
-          imageUrl: 'https://images.pexels.com/photos/14602294/pexels-photo-14602294.jpeg',
-          alt: 'Stickers and Prints',
-        },
-        {
-          imageUrl: 'https://images.unsplash.com/photo-1563245372-f21724e3856d',
-          alt: 'Neon Signage',
         },
       ],
     },

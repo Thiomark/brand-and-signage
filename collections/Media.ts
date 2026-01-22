@@ -4,31 +4,50 @@ export const Media: CollectionConfig = {
   slug: 'media',
   admin: {
     useAsTitle: 'alt',
+    description: 'Upload images via drag & drop or click to select files',
   },
   access: {
     read: () => true,
+  },
+  upload: {
+    mimeTypes: ['image/*'],
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 400,
+        height: 300,
+        position: 'centre',
+      },
+      {
+        name: 'card',
+        width: 768,
+        height: 1024,
+        position: 'centre',
+      },
+      {
+        name: 'tablet',
+        width: 1024,
+        height: undefined,
+        position: 'centre',
+      },
+    ],
+    adminThumbnail: 'thumbnail',
   },
   fields: [
     {
       name: 'alt',
       type: 'text',
       required: true,
-    },
-    {
-      name: 'url',
-      type: 'text',
-      required: true,
       admin: {
-        description: 'The URL for this media (can be Cloudinary or external URL)',
+        description: 'Describe the image for accessibility',
       },
     },
     {
-      name: 'width',
-      type: 'number',
-    },
-    {
-      name: 'height',
-      type: 'number',
+      name: 'caption',
+      type: 'text',
+      admin: {
+        description: 'Optional caption for the image',
+      },
     },
   ],
 }

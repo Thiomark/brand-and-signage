@@ -1,6 +1,7 @@
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { payloadCloudinaryPlugin } from '@jhb.software/payload-cloudinary-plugin'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
@@ -38,7 +39,24 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
+    // Note: Run `pnpm dev` in terminal to handle schema migrations interactively
+    // Schema changes require interactive prompts that cannot be handled in background
     push: true,
   }),
+  plugins: [
+    payloadCloudinaryPlugin({
+      collections: {
+        media: true,
+      },
+      cloudName: process.env.CLOUDINARY_CLOUD_NAME!,
+      credentials: {
+        apiKey: process.env.CLOUDINARY_API_KEY!,
+        apiSecret: process.env.CLOUDINARY_API_SECRET!,
+      },
+      folder: 'brand-and-signage',
+      clientUploads: true,
+      useFilename: true,
+    }),
+  ],
   sharp,
 })

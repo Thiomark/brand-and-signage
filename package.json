@@ -10,6 +10,7 @@
     "payload": "payload"
   },
   "dependencies": {
+    "@jhb.software/payload-cloudinary-plugin": "^0.3.1",
     "@payloadcms/db-postgres": "^3.72.0",
     "@payloadcms/next": "^3.72.0",
     "@payloadcms/richtext-lexical": "^3.72.0",
