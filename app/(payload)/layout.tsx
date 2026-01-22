@@ -5,6 +5,8 @@ import config from '@payload-config'
 import { RootLayout, handleServerFunctions } from '@payloadcms/next/layouts'
 import React from 'react'
 
+/* Payload CMS Admin Styles */
+import '@payloadcms/ui/styles.css'
 import './custom.scss'
 import { importMap } from './admin/importMap.js'
 
