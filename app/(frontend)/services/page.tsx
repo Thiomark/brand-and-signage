@@ -1,5 +1,6 @@
 import React from "react";
-import Button from "../components/Button";
+import Button from "../../components/Button";
+import { getPayloadClient } from "@/lib/payload";
 
 const PrinterIcon = () => (
   <svg
@@ -52,49 +53,79 @@ const BuildingIcon = () => (
   </svg>
 );
 
-const services = [
+const iconMap: Record<string, React.ReactNode> = {
+  printer: <PrinterIcon />,
+  sticker: <StickerIcon />,
+  building: <BuildingIcon />,
+};
+
+interface Service {
+  id?: string;
+  title: string;
+  description: string;
+  icon: string;
+  features: { feature: string }[];
+  order?: number;
+}
+
+const defaultServices: Service[] = [
   {
-    icon: <PrinterIcon />,
-    title: "Copies & Prints",
-    description:
-      "From simple document copies to large-format prints, we deliver crisp, vibrant results every time.",
+    icon: 'printer',
+    title: 'Copies & Prints',
+    description: 'From simple document copies to large-format prints, we deliver crisp, vibrant results every time.',
     features: [
-      "Black & white and color copies",
-      "Large format printing (up to 44 inches wide)",
-      "Canvas prints and photo enlargements",
-      "Poster printing",
-      "Blueprint and architectural prints",
+      { feature: 'Black & white and color copies' },
+      { feature: 'Large format printing (up to 44 inches wide)' },
+      { feature: 'Canvas prints and photo enlargements' },
+      { feature: 'Poster printing' },
+      { feature: 'Blueprint and architectural prints' },
     ],
   },
   {
-    icon: <StickerIcon />,
-    title: "Custom Stickers",
-    description:
-      "Durable, eye-catching stickers for branding, packaging, events, and personal expression.",
+    icon: 'sticker',
+    title: 'Custom Stickers',
+    description: 'Durable, eye-catching stickers for branding, packaging, events, and personal expression.',
     features: [
-      "Die-cut custom shapes",
-      "Waterproof and UV-resistant materials",
-      "Matte, gloss, and clear finishes",
-      "Labels and product stickers",
-      "Bumper stickers and decals",
+      { feature: 'Die-cut custom shapes' },
+      { feature: 'Waterproof and UV-resistant materials' },
+      { feature: 'Matte, gloss, and clear finishes' },
+      { feature: 'Labels and product stickers' },
+      { feature: 'Bumper stickers and decals' },
     ],
   },
   {
-    icon: <BuildingIcon />,
-    title: "Business Signage",
-    description:
-      "Professional signage solutions to make your business stand out and attract customers.",
+    icon: 'building',
+    title: 'Business Signage',
+    description: 'Professional signage solutions to make your business stand out and attract customers.',
     features: [
-      "Indoor and outdoor signs",
-      "Vinyl banners and mesh banners",
-      "A-frame and sidewalk signs",
-      "Window graphics and lettering",
-      "Vehicle wraps and magnets",
+      { feature: 'Indoor and outdoor signs' },
+      { feature: 'Vinyl banners and mesh banners' },
+      { feature: 'A-frame and sidewalk signs' },
+      { feature: 'Window graphics and lettering' },
+      { feature: 'Vehicle wraps and magnets' },
     ],
   },
 ];
 
-const ServicesPage = () => {
+const ServicesPage = async () => {
+  let servicesData: Service[] = [];
+  try {
+    const payload = await getPayloadClient();
+    const result = await payload.find({
+      collection: 'services',
+      sort: 'order',
+      limit: 100,
+    });
+    if (result.docs.length > 0) {
+      servicesData = result.docs as Service[];
+    }
+  } catch {
+    // PayloadCMS unavailable, use default values
+    servicesData = [];
+  }
+
+  const services = servicesData.length > 0 ? servicesData : defaultServices;
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-16">
       {/* Page Header */}
@@ -119,13 +150,13 @@ const ServicesPage = () => {
           >
             <div className="flex-1 bg-gradient-to-br from-blue-600 to-pink-500 p-8 rounded-2xl">
               <div className="flex items-center gap-4 mb-4">
-                {service.icon}
+                {iconMap[service.icon] || <PrinterIcon />}
                 <h2 className="text-2xl font-bold uppercase">{service.title}</h2>
               </div>
               <p className="text-gray-100 mb-6">{service.description}</p>
               <ul className="space-y-2">
-                {service.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2">
+                {service.features.map((item) => (
+                  <li key={item.feature} className="flex items-center gap-2">
                     <svg
                       className="w-5 h-5 text-pink-300"
                       fill="currentColor"
@@ -137,7 +168,7 @@ const ServicesPage = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    {feature}
+                    {item.feature}
                   </li>
                 ))}
               </ul>

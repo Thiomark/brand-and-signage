@@ -5,15 +5,24 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Button from "./Button";
 
-const Navbar = () => {
-  const pathname = usePathname();
+interface NavbarProps {
+  siteName?: string;
+  navLinks?: {
+    label: string;
+    href: string;
+  }[];
+}
 
-  const navLinks = [
+const Navbar = ({
+  siteName = "BRAND AND SIGNAGE",
+  navLinks = [
     { href: "/services", label: "Services" },
     { href: "/gallery", label: "Gallery" },
     { href: "/about", label: "About Us" },
     { href: "/contact", label: "Contact" },
-  ];
+  ],
+}: NavbarProps) => {
+  const pathname = usePathname();
 
   return (
     <nav className="flex items-center justify-between px-8 py-6 bg-[#1a2b4b]">
@@ -22,7 +31,7 @@ const Navbar = () => {
           <span className="font-bold text-xl leading-none">BS</span>
         </div>
         <span className="font-bold tracking-wider text-lg">
-          BRAND AND SIGNAGE
+          {siteName}
         </span>
       </Link>
 
