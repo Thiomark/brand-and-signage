@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateCollectionAfterChange } from '@/lib/revalidate'
 
 export const GalleryCategories: CollectionConfig = {
   slug: 'gallery-categories',
@@ -7,6 +8,9 @@ export const GalleryCategories: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidateCollectionAfterChange],
   },
   fields: [
     {

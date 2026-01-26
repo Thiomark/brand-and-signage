@@ -1,7 +1,9 @@
 import "../globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
+import { draftMode } from "next/headers";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { RefreshOnSave } from "../components/RefreshOnSave";
 import { getPayloadClient } from "@/lib/payload";
 
 const geistSans = Geist({
@@ -59,8 +61,11 @@ export default async function FrontendLayout({
   };
   const footerText = siteSettings?.footerText || "© 2026 BRAND AND SIGNAGE. All rights reserved.";
 
+  const { isEnabled: isDraftMode } = await draftMode();
+
   return (
     <div className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-[#1a2b4b] text-white font-sans selection:bg-pink-500`}>
+      {isDraftMode && <RefreshOnSave />}
       <Navbar siteName={siteName} navLinks={navLinks} />
       <main>{children}</main>
       <Footer socialLinks={socialLinks} footerText={footerText} />

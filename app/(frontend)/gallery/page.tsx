@@ -2,6 +2,9 @@ import React from "react";
 import { getPayloadClient } from "@/lib/payload";
 import GalleryClient from "./GalleryClient";
 
+// Revalidate every 60 seconds so CMS changes appear on the frontend
+export const revalidate = 60;
+
 interface GalleryCategory {
   id: string;
   name: string;

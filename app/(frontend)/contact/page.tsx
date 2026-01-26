@@ -2,6 +2,9 @@ import React from "react";
 import { getPayloadClient } from "@/lib/payload";
 import ContactForm from "./ContactForm";
 
+// Revalidate every 60 seconds so CMS changes appear on the frontend
+export const revalidate = 60;
+
 interface ContactPageData {
   pageTitle?: string;
   pageSubtitle?: string;
@@ -38,34 +41,38 @@ const ContactPage = async () => {
     contactPageData = null;
   }
 
-  // Default values
-  const pageTitle = contactPageData?.pageTitle || 'Contact Us';
-  const pageSubtitle = contactPageData?.pageSubtitle || 'Get in touch with us for a free quote or any questions about our services.';
-  const formTitle = contactPageData?.formTitle || 'Send Us a Message';
-  const contactInfoTitle = contactPageData?.contactInfoTitle || 'Get In Touch';
+  // Default values - use ?? so that CMS values (even empty strings) take precedence
+  const pageTitle = contactPageData?.pageTitle ?? 'Contact Us';
+  const pageSubtitle = contactPageData?.pageSubtitle ?? 'Get in touch with us for a free quote or any questions about our services.';
+  const formTitle = contactPageData?.formTitle ?? 'Send Us a Message';
+  const contactInfoTitle = contactPageData?.contactInfoTitle ?? 'Get In Touch';
 
-  const address = contactPageData?.address || {
-    street: '123 Print Street',
-    city: 'Johannesburg, GP 2000',
-    country: 'South Africa',
+  const address = {
+    street: contactPageData?.address?.street ?? '123 Print Street',
+    city: contactPageData?.address?.city ?? 'Johannesburg, GP 2000',
+    country: contactPageData?.address?.country ?? 'South Africa',
   };
 
-  const phone = contactPageData?.phone || '+27 11 123 4567';
-  const email = contactPageData?.email || 'info@brandandsignage.co.za';
-  const businessHoursTitle = contactPageData?.businessHoursTitle || 'Business Hours';
+  const phone = contactPageData?.phone ?? '+27 11 123 4567';
+  const email = contactPageData?.email ?? 'info@brandandsignage.co.za';
+  const businessHoursTitle = contactPageData?.businessHoursTitle ?? 'Business Hours';
 
-  const businessHours = contactPageData?.businessHours || [
-    { days: 'Monday - Friday', hours: '08:00 - 17:00', isClosed: false },
-    { days: 'Saturday', hours: '09:00 - 13:00', isClosed: false },
-    { days: 'Sunday', hours: 'Closed', isClosed: true },
-  ];
+  const businessHours = contactPageData?.businessHours?.length
+    ? contactPageData.businessHours
+    : [
+        { days: 'Monday - Friday', hours: '08:00 - 17:00', isClosed: false },
+        { days: 'Saturday', hours: '09:00 - 13:00', isClosed: false },
+        { days: 'Sunday', hours: 'Closed', isClosed: true },
+      ];
 
-  const serviceOptions = contactPageData?.serviceOptions || [
-    { value: 'copies-prints', label: 'Copies & Prints' },
-    { value: 'custom-stickers', label: 'Custom Stickers' },
-    { value: 'business-signage', label: 'Business Signage' },
-    { value: 'other', label: 'Other' },
-  ];
+  const serviceOptions = contactPageData?.serviceOptions?.length
+    ? contactPageData.serviceOptions
+    : [
+        { value: 'copies-prints', label: 'Copies & Prints' },
+        { value: 'custom-stickers', label: 'Custom Stickers' },
+        { value: 'business-signage', label: 'Business Signage' },
+        { value: 'other', label: 'Other' },
+      ];
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-16">

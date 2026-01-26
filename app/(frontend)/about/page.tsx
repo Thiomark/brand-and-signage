@@ -2,6 +2,9 @@ import React from "react";
 import Button from "../../components/Button";
 import { getPayloadClient } from "@/lib/payload";
 
+// Revalidate every 60 seconds so CMS changes appear on the frontend
+export const revalidate = 60;
+
 const QualityIcon = () => (
   <svg
     className="w-10 h-10"

@@ -3,6 +3,9 @@ import Image from "next/image";
 import ServiceCard from "../components/ServiceCard";
 import { getPayloadClient } from "@/lib/payload";
 
+// Revalidate every 60 seconds so CMS changes appear on the frontend
+export const revalidate = 60;
+
 const PrinterIcon = () => (
   <svg
     className="w-16 h-16"

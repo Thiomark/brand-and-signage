@@ -21,13 +21,36 @@ import { ContactPage } from './globals/ContactPage'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const serverURL = process.env.NEXT_PUBLIC_SERVER_URL || process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3009'
+
+// Map global slugs to frontend paths for live preview
+const globalPreviewPaths: Record<string, string> = {
+  'home-page': '/',
+  'about-page': '/about',
+  'contact-page': '/contact',
+}
+
 export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    livePreview: {
+      url: ({ data, globalConfig }) => {
+        const slug = globalConfig?.slug || ''
+        const path = slug ? globalPreviewPaths[slug] : '/'
+        return `${serverURL}${path || '/'}`
+      },
+      globals: ['home-page', 'about-page', 'contact-page'],
+      breakpoints: [
+        { label: 'Mobile', name: 'mobile', width: 375, height: 667 },
+        { label: 'Tablet', name: 'tablet', width: 768, height: 1024 },
+        { label: 'Desktop', name: 'desktop', width: 1440, height: 900 },
+      ],
+    },
   },
+  serverURL,
   collections: [Users, Media, Pages, Services, GalleryItems, GalleryCategories],
   globals: [SiteSettings, HomePage, AboutPage, ContactPage],
   editor: lexicalEditor(),
