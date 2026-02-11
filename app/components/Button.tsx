@@ -19,11 +19,11 @@ const Button = ({
   type = "button",
 }: ButtonProps) => {
   const baseClasses =
-    "px-8 py-2 rounded-full font-bold transition shadow-lg text-white";
+    "rounded-full px-8 py-2 font-bold transition-all shadow-sm";
   const variantClasses =
     variant === "primary"
-      ? "bg-pink-500 hover:bg-pink-600"
-      : "bg-[#1a2b4b] hover:bg-[#132038]";
+      ? "bg-pink-500 text-white hover:bg-blue-600"
+      : "bg-blue-600 text-white hover:bg-blue-700";
 
   const combinedClasses = `${baseClasses} ${variantClasses} ${className}`;
 

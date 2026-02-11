@@ -19,6 +19,12 @@ const geistMono = Geist_Mono({
 interface SiteSettings {
   siteName?: string;
   siteTagline?: string;
+  logoUrl?: string;
+  logoImage?: {
+    url?: string;
+    cloudinaryUrl?: string;
+    secure_url?: string;
+  };
   socialLinks?: {
     facebook?: string;
     twitter?: string;
@@ -31,20 +37,47 @@ interface SiteSettings {
   }[];
 }
 
+interface ContactPageData {
+  address?: {
+    street?: string;
+    city?: string;
+    country?: string;
+  };
+  phone?: string;
+  email?: string;
+}
+
+const resolveLogoSrc = (settings: SiteSettings | null) => {
+  if (!settings) return "";
+  if (settings.logoImage?.cloudinaryUrl) return settings.logoImage.cloudinaryUrl;
+  if (settings.logoImage?.secure_url) return settings.logoImage.secure_url;
+  if (settings.logoImage?.url) return settings.logoImage.url;
+  if (settings.logoUrl) return settings.logoUrl;
+  return "";
+};
+
 export default async function FrontendLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   let siteSettings: SiteSettings | null = null;
+  let contactPageData: ContactPageData | null = null;
+
   try {
     const payload = await getPayloadClient();
-    siteSettings = await payload.findGlobal({
-      slug: 'site-settings',
-    }) as SiteSettings;
+
+    siteSettings = (await payload.findGlobal({
+      slug: "site-settings",
+      depth: 2,
+    })) as SiteSettings;
+
+    contactPageData = (await payload.findGlobal({
+      slug: "contact-page",
+    })) as ContactPageData;
   } catch {
-    // PayloadCMS unavailable, use default values
     siteSettings = null;
+    contactPageData = null;
   }
 
   const siteName = siteSettings?.siteName || "BRAND AND SIGNAGE";
@@ -59,16 +92,32 @@ export default async function FrontendLayout({
     twitter: "https://twitter.com",
     instagram: "https://instagram.com",
   };
-  const footerText = siteSettings?.footerText || "© 2026 BRAND AND SIGNAGE. All rights reserved.";
+  const footerText =
+    siteSettings?.footerText || "© 2026 BRAND AND SIGNAGE. All rights reserved.";
+  const logoSrc = resolveLogoSrc(siteSettings);
+
+  const footerContact = {
+    street: contactPageData?.address?.street || "BNP Center ground floor room A26",
+    city: contactPageData?.address?.city || "Maseru",
+    country: contactPageData?.address?.country || "Lesotho",
+    phone: contactPageData?.phone || "5683 4053 / 2232 5197",
+    email: contactPageData?.email || "branding1.signage@gmail.com",
+  };
 
   const { isEnabled: isDraftMode } = await draftMode();
 
   return (
-    <div className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-[#1a2b4b] text-white font-sans selection:bg-pink-500`}>
+    <div
+      className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-white font-sans text-slate-900 antialiased selection:bg-pink-100`}
+    >
       {isDraftMode && <RefreshOnSave />}
-      <Navbar siteName={siteName} navLinks={navLinks} />
+      <Navbar siteName={siteName} navLinks={navLinks} logoSrc={logoSrc} />
       <main>{children}</main>
-      <Footer socialLinks={socialLinks} footerText={footerText} />
+      <Footer
+        socialLinks={socialLinks}
+        footerText={footerText}
+        contactInfo={footerContact}
+      />
     </div>
   );
 }

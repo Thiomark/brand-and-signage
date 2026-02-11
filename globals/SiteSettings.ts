@@ -22,10 +22,18 @@ export const SiteSettings: GlobalConfig = {
       defaultValue: 'Copies, Stickers, Mounted Prints & Business Signage',
     },
     {
+      name: 'logoImage',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Upload a logo image for the site header (recommended).',
+      },
+    },
+    {
       name: 'logoUrl',
       type: 'text',
       admin: {
-        description: 'Logo image URL (optional)',
+        description: 'External logo image URL fallback (optional).',
       },
     },
     {

@@ -18,18 +18,21 @@ const ServiceCard = ({
   buttonHref = "/services",
   variant = "blue",
 }: ServiceCardProps) => {
-  const bgColor = variant === "blue" ? "bg-blue-600" : "bg-pink-500";
-  const textColor = variant === "blue" ? "text-blue-100" : "text-pink-100";
-  const buttonVariant = variant === "blue" ? "primary" : "secondary";
+  const accentClasses =
+    variant === "blue"
+      ? "text-blue-600 bg-blue-50"
+      : "text-pink-500 bg-pink-50";
+  const barColor = variant === "blue" ? "bg-blue-600" : "bg-pink-500";
 
   return (
-    <div
-      className={`${bgColor} p-8 rounded-2xl flex flex-col items-center text-center shadow-xl transform hover:-translate-y-2 transition-transform`}
-    >
-      <div className="mb-6">{icon}</div>
-      <h3 className="text-2xl font-bold uppercase mb-4">{title}</h3>
-      <p className={`${textColor} mb-8 flex-grow`}>{description}</p>
-      <Button variant={buttonVariant} href={buttonHref}>
+    <div className="group rounded-[2rem] border border-slate-100 bg-white p-8 text-center shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+      <div className={`mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl ${accentClasses}`}>
+        {icon}
+      </div>
+      <h3 className="mb-3 text-2xl font-black uppercase tracking-tight text-blue-900">{title}</h3>
+      <p className="mb-8 text-slate-500">{description}</p>
+      <div className={`mb-6 h-1.5 w-12 rounded-full ${barColor} transition-all duration-300 group-hover:w-full`} />
+      <Button variant={variant === "blue" ? "secondary" : "primary"} href={buttonHref}>
         {buttonText}
       </Button>
     </div>
