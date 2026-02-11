@@ -62,9 +62,8 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
-    // Note: Run `pnpm dev` in terminal to handle schema migrations interactively
-    // Schema changes require interactive prompts that cannot be handled in background
-    push: true,
+    push: false,
+    migrationDir: path.resolve(dirname, 'migrations'),
   }),
   plugins: [
     payloadCloudinaryPlugin({
