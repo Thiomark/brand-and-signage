@@ -12,8 +12,8 @@ dependencies:
     specifier: ^3.72.0
     version: 3.72.0(payload@3.72.0)
   '@payloadcms/live-preview-react':
-    specifier: ^3.73.0
-    version: 3.73.0(react-dom@19.2.3)(react@19.2.3)
+    specifier: 3.72.0
+    version: 3.72.0(react-dom@19.2.3)(react@19.2.3)
   '@payloadcms/next':
     specifier: ^3.72.0
     version: 3.72.0(@types/react@19.2.9)(graphql@16.12.0)(monaco-editor@0.55.1)(next@15.5.9)(payload@3.72.0)(react-dom@19.2.3)(react@19.2.3)(typescript@5.9.3)
@@ -2024,19 +2024,19 @@ packages:
       - typescript
     dev: false
 
-  /@payloadcms/live-preview-react@3.73.0(react-dom@19.2.3)(react@19.2.3):
-    resolution: {integrity: sha512-UqwMo1OYowgsw5bNf0taJbOAd/3crXlvDZzB+ZPA5sSXhDkpp1oSzFaH+ejdXt2//VGvaz37tblYzht53s5yAQ==}
+  /@payloadcms/live-preview-react@3.72.0(react-dom@19.2.3)(react@19.2.3):
+    resolution: {integrity: sha512-qiywzscOdpDqRtdFiiG/AQw+ibyIJQ1Cf0inaWEfrQahh6K+BqvoRQ6GLkhYsvkbqxKgEnXdUPh2ksIDSXZIfw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.1 || ^19.1.2 || ^19.2.1
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.1 || ^19.1.2 || ^19.2.1
     dependencies:
-      '@payloadcms/live-preview': 3.73.0
+      '@payloadcms/live-preview': 3.72.0
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
     dev: false
 
-  /@payloadcms/live-preview@3.73.0:
-    resolution: {integrity: sha512-zeUN4u8gc4p53xoh+jeF+BnqGZPi0RSYp84vcUboUYsboK8glxCLsjkWhe5v4vFt902Y7/tCm07cVyyCHw3H2Q==}
+  /@payloadcms/live-preview@3.72.0:
+    resolution: {integrity: sha512-7/rk46ymYoC9GpPT88trtj7MHUcTOmHSiBQCR9oUDSfTDfqDypYcl7En00brphTDwKODKVz8+CgIqvAHRGXXNw==}
     dev: false
 
   /@payloadcms/next@3.72.0(@types/react@19.2.9)(graphql@16.12.0)(monaco-editor@0.55.1)(next@15.5.9)(payload@3.72.0)(react-dom@19.2.3)(react@19.2.3)(typescript@5.9.3):
