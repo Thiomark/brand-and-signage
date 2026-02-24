@@ -30,6 +30,12 @@ const globalPreviewPaths: Record<string, string> = {
   'contact-page': '/contact',
 }
 
+const collectionPreviewPaths: Record<string, string> = {
+  services: '/services',
+  'gallery-items': '/gallery',
+  'gallery-categories': '/gallery',
+}
+
 const buildDraftPreviewURL = (pathname: string) => {
   const secret = process.env.PAYLOAD_SECRET || ''
   const safePath = pathname || '/'
@@ -43,11 +49,26 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     livePreview: {
-      url: ({ globalConfig }) => {
-        const slug = globalConfig?.slug || ''
-        const path = slug ? globalPreviewPaths[slug] : '/'
-        return buildDraftPreviewURL(path)
+      url: ({ globalConfig, collectionConfig, data }) => {
+        if (globalConfig?.slug) {
+          const globalPath = globalPreviewPaths[globalConfig.slug] || '/'
+          return buildDraftPreviewURL(globalPath)
+        }
+
+        if (collectionConfig?.slug === 'pages') {
+          const pageSlug = typeof data?.slug === 'string' ? data.slug.trim() : ''
+          const pagePath = pageSlug ? `/${pageSlug}` : '/'
+          return buildDraftPreviewURL(pagePath)
+        }
+
+        if (collectionConfig?.slug) {
+          const collectionPath = collectionPreviewPaths[collectionConfig.slug] || '/'
+          return buildDraftPreviewURL(collectionPath)
+        }
+
+        return buildDraftPreviewURL('/')
       },
+      collections: ['services', 'gallery-items', 'gallery-categories', 'pages'],
       globals: ['home-page', 'about-page', 'contact-page'],
       breakpoints: [
         { label: 'Mobile', name: 'mobile', width: 375, height: 667 },
