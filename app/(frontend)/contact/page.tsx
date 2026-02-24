@@ -1,4 +1,5 @@
 import React from "react";
+import { draftMode } from "next/headers";
 import { getPayloadClient } from "@/lib/payload";
 import ContactForm from "./ContactForm";
 
@@ -30,11 +31,13 @@ interface ContactPageData {
 }
 
 const ContactPage = async () => {
+  const { isEnabled: isDraftMode } = await draftMode();
   let contactPageData: ContactPageData | null = null;
   try {
     const payload = await getPayloadClient();
     contactPageData = await payload.findGlobal({
       slug: 'contact-page',
+      draft: isDraftMode,
     }) as ContactPageData;
   } catch {
     // PayloadCMS unavailable or global doesn't exist, use default values

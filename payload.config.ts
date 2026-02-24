@@ -30,6 +30,12 @@ const globalPreviewPaths: Record<string, string> = {
   'contact-page': '/contact',
 }
 
+const buildDraftPreviewURL = (pathname: string) => {
+  const secret = process.env.PAYLOAD_SECRET || ''
+  const safePath = pathname || '/'
+  return `/api/draft?secret=${encodeURIComponent(secret)}&url=${encodeURIComponent(safePath)}`
+}
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -37,10 +43,10 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     livePreview: {
-      url: ({ data, globalConfig }) => {
+      url: ({ globalConfig }) => {
         const slug = globalConfig?.slug || ''
         const path = slug ? globalPreviewPaths[slug] : '/'
-        return `${serverURL}${path || '/'}`
+        return buildDraftPreviewURL(path)
       },
       globals: ['home-page', 'about-page', 'contact-page'],
       breakpoints: [

@@ -1,4 +1,5 @@
 import React from "react";
+import { draftMode } from "next/headers";
 import Button from "../../components/Button";
 import { getPayloadClient } from "@/lib/payload";
 
@@ -60,11 +61,13 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 const AboutPage = async () => {
+  const { isEnabled: isDraftMode } = await draftMode();
   let aboutPageData;
   try {
     const payload = await getPayloadClient();
     aboutPageData = await payload.findGlobal({
       slug: 'about-page',
+      draft: isDraftMode,
     });
   } catch {
     // PayloadCMS unavailable or global doesn't exist, use default values

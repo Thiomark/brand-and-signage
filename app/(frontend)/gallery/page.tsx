@@ -1,4 +1,5 @@
 import React from "react";
+import { draftMode } from "next/headers";
 import { getPayloadClient } from "@/lib/payload";
 import GalleryClient from "./GalleryClient";
 
@@ -33,6 +34,7 @@ const resolveImageUrl = (item: GalleryItem) => {
 };
 
 const GalleryPage = async () => {
+  const { isEnabled: isDraftMode } = await draftMode();
   let categories: string[] = ["All"];
   let galleryItems: Array<{ id: string; title: string; category: string; image: string }> = [];
 
@@ -43,6 +45,7 @@ const GalleryPage = async () => {
       collection: "gallery-categories",
       sort: "order",
       limit: 100,
+      draft: isDraftMode,
     });
 
     if (categoriesResult.docs.length > 0) {
@@ -54,6 +57,7 @@ const GalleryPage = async () => {
       sort: "order",
       limit: 100,
       depth: 2,
+      draft: isDraftMode,
     });
 
     galleryItems = (itemsResult.docs as GalleryItem[])

@@ -16,13 +16,25 @@ const collectionPathMap: Record<string, string> = {
   'gallery-categories': '/gallery',
 }
 
+const safeRevalidatePath = (path: string, type?: 'layout' | 'page') => {
+  try {
+    revalidatePath(path, type)
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    if (message.includes('static generation store missing')) {
+      return
+    }
+    throw error
+  }
+}
+
 export const revalidateGlobalAfterChange: GlobalAfterChangeHook = ({ global }) => {
   const path = globalPathMap[global.slug]
   if (path) {
-    revalidatePath(path)
+    safeRevalidatePath(path)
     // Also revalidate layout for site-settings since it affects the whole site
     if (global.slug === 'site-settings') {
-      revalidatePath('/', 'layout')
+      safeRevalidatePath('/', 'layout')
     }
   }
 }
@@ -31,6 +43,6 @@ export const revalidateCollectionAfterChange: CollectionAfterChangeHook = ({ col
   const slug = typeof collection === 'string' ? collection : collection.slug
   const path = collectionPathMap[slug]
   if (path) {
-    revalidatePath(path)
+    safeRevalidatePath(path)
   }
 }

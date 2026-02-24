@@ -61,6 +61,7 @@ export default async function FrontendLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { isEnabled: isDraftMode } = await draftMode();
   let siteSettings: SiteSettings | null = null;
   let contactPageData: ContactPageData | null = null;
 
@@ -70,10 +71,12 @@ export default async function FrontendLayout({
     siteSettings = (await payload.findGlobal({
       slug: "site-settings",
       depth: 2,
+      draft: isDraftMode,
     })) as SiteSettings;
 
     contactPageData = (await payload.findGlobal({
       slug: "contact-page",
+      draft: isDraftMode,
     })) as ContactPageData;
   } catch {
     siteSettings = null;
@@ -103,8 +106,6 @@ export default async function FrontendLayout({
     phone: contactPageData?.phone || "5683 4053 / 2232 5197",
     email: contactPageData?.email || "branding1.signage@gmail.com",
   };
-
-  const { isEnabled: isDraftMode } = await draftMode();
 
   return (
     <div

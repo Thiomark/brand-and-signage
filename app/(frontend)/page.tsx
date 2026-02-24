@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { draftMode } from "next/headers";
 import ServiceCard from "../components/ServiceCard";
 import { getPayloadClient } from "@/lib/payload";
 
@@ -30,10 +31,11 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 const HomePage = async () => {
+  const { isEnabled: isDraftMode } = await draftMode();
   let homePageData;
   try {
     const payload = await getPayloadClient();
-    homePageData = await payload.findGlobal({ slug: "home-page" });
+    homePageData = await payload.findGlobal({ slug: "home-page", draft: isDraftMode });
   } catch {
     homePageData = null;
   }

@@ -1,4 +1,5 @@
 import React from "react";
+import { draftMode } from "next/headers";
 import Button from "../../components/Button";
 import { getPayloadClient } from "@/lib/payload";
 
@@ -71,63 +72,24 @@ interface Service {
   order?: number;
 }
 
-const defaultServices: Service[] = [
-  {
-    icon: 'printer',
-    title: 'Copies & Prints',
-    description: 'From simple document copies to large-format prints, we deliver crisp, vibrant results every time.',
-    features: [
-      { feature: 'Black & white and color copies' },
-      { feature: 'Large format printing (up to 44 inches wide)' },
-      { feature: 'Canvas prints and photo enlargements' },
-      { feature: 'Poster printing' },
-      { feature: 'Blueprint and architectural prints' },
-    ],
-  },
-  {
-    icon: 'sticker',
-    title: 'Custom Stickers',
-    description: 'Durable, eye-catching stickers for branding, packaging, events, and personal expression.',
-    features: [
-      { feature: 'Die-cut custom shapes' },
-      { feature: 'Waterproof and UV-resistant materials' },
-      { feature: 'Matte, gloss, and clear finishes' },
-      { feature: 'Labels and product stickers' },
-      { feature: 'Bumper stickers and decals' },
-    ],
-  },
-  {
-    icon: 'building',
-    title: 'Business Signage',
-    description: 'Professional signage solutions to make your business stand out and attract customers.',
-    features: [
-      { feature: 'Indoor and outdoor signs' },
-      { feature: 'Vinyl banners and mesh banners' },
-      { feature: 'A-frame and sidewalk signs' },
-      { feature: 'Window graphics and lettering' },
-      { feature: 'Vehicle wraps and magnets' },
-    ],
-  },
-];
-
 const ServicesPage = async () => {
+  const { isEnabled: isDraftMode } = await draftMode();
   let servicesData: Service[] = [];
   try {
     const payload = await getPayloadClient();
     const result = await payload.find({
-      collection: 'services',
-      sort: 'order',
+      collection: "services",
+      sort: "order",
       limit: 100,
+      draft: isDraftMode,
     });
     if (result.docs.length > 0) {
       servicesData = result.docs as Service[];
     }
   } catch {
-    // PayloadCMS unavailable, use default values
+    // PayloadCMS unavailable or empty collection
     servicesData = [];
   }
-
-  const services = servicesData.length > 0 ? servicesData : defaultServices;
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-16">
@@ -144,7 +106,7 @@ const ServicesPage = async () => {
 
       {/* Services List */}
       <div className="space-y-16">
-        {services.map((service, index) => (
+        {servicesData.map((service, index) => (
           <div
             key={service.title}
             className={`flex flex-col md:flex-row gap-8 items-center ${
@@ -154,7 +116,9 @@ const ServicesPage = async () => {
             <div className="flex-1 bg-gradient-to-br from-blue-600 to-pink-500 p-8 rounded-2xl">
               <div className="flex items-center gap-4 mb-4">
                 {iconMap[service.icon] || <PrinterIcon />}
-                <h2 className="text-2xl font-bold uppercase">{service.title}</h2>
+                <h2 className="text-2xl font-bold uppercase">
+                  {service.title}
+                </h2>
               </div>
               <p className="text-gray-100 mb-6">{service.description}</p>
               <ul className="space-y-2">
@@ -182,7 +146,8 @@ const ServicesPage = async () => {
                   Ready to get started?
                 </h3>
                 <p className="text-gray-400 mb-6">
-                  Contact us for a free quote on your {service.title.toLowerCase()} project.
+                  Contact us for a free quote on your{" "}
+                  {service.title.toLowerCase()} project.
                 </p>
                 <Button href="/contact">Get a Quote</Button>
               </div>
