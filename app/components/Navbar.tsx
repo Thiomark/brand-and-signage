@@ -33,14 +33,15 @@ const Navbar = ({
         <Link href="/" className="flex items-center space-x-3">
           {logoSrc ? (
             <div className="relative h-11 w-11 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
-              <Image src={logoSrc} alt={`${siteName} logo`} fill className="object-contain p-1" sizes="44px" />
+              <Image
+                src={logoSrc}
+                alt={`${siteName} logo`}
+                fill
+                className="object-contain p-1"
+                sizes="44px"
+              />
             </div>
-          ) : (
-            <div className="relative flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-pink-500 shadow-sm">
-              <span className="text-xl font-black leading-none text-white">BS</span>
-            </div>
-          )}
-          <span className="text-lg font-black tracking-tight text-blue-900 uppercase">{siteName}</span>
+          ) : null}
         </Link>
 
         <div className="hidden items-center space-x-8 text-sm font-bold uppercase tracking-wider md:flex">
