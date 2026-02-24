@@ -5,6 +5,7 @@ export const AboutPage: GlobalConfig = {
   slug: 'about-page',
   access: {
     read: () => true,
+    update: ({ req: { user } }) => Boolean(user),
   },
   hooks: {
     afterChange: [revalidateGlobalAfterChange],

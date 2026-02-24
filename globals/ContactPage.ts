@@ -5,6 +5,7 @@ export const ContactPage: GlobalConfig = {
   slug: 'contact-page',
   access: {
     read: () => true,
+    update: ({ req: { user } }) => Boolean(user),
   },
   hooks: {
     afterChange: [revalidateGlobalAfterChange],
