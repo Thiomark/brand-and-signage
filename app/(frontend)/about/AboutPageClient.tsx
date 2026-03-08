@@ -87,32 +87,32 @@ export const AboutPageClient = ({ initialData }: { initialData: AboutPageData | 
     <div className="mx-auto max-w-7xl px-6 py-16">
       <div className="mb-16 text-center">
         <h1 className="mb-4 text-4xl font-extrabold uppercase tracking-tight md:text-5xl">{pageTitle}</h1>
-        <p className="mx-auto max-w-2xl text-xl text-gray-300">{pageSubtitle}</p>
+        <p className="mx-auto max-w-2xl text-xl text-slate-600">{pageSubtitle}</p>
       </div>
 
       <div className="mb-20 grid items-center gap-12 md:grid-cols-2">
         <div>
           <h2 className="mb-6 text-3xl font-bold">{storyTitle}</h2>
           {storyParagraphs.map((para, index) => (
-            <p key={index} className="mb-4 text-gray-300">
+            <p key={index} className="mb-4 text-slate-600">
               {para.text}
             </p>
           ))}
         </div>
         <div className="rounded-2xl bg-gradient-to-br from-blue-600 to-pink-500 p-1">
-          <div className="rounded-2xl bg-[#1a2b4b] p-8">
+          <div className="rounded-2xl bg-white p-8 shadow-sm">
             <div className="text-center">
               <div className="mb-2 text-6xl font-extrabold text-pink-500">{stats.yearsExperience || '10+'}</div>
-              <div className="text-gray-300">{stats.yearsLabel || 'Years of Experience'}</div>
+              <div className="text-slate-600">{stats.yearsLabel || 'Years of Experience'}</div>
             </div>
             <div className="mt-8 grid grid-cols-2 gap-6">
               <div className="text-center">
                 <div className="text-4xl font-bold text-blue-400">{stats.projectsCompleted || '5000+'}</div>
-                <div className="text-sm text-gray-400">{stats.projectsLabel || 'Projects Completed'}</div>
+                <div className="text-sm text-slate-500">{stats.projectsLabel || 'Projects Completed'}</div>
               </div>
               <div className="text-center">
                 <div className="text-4xl font-bold text-blue-400">{stats.happyClients || '1000+'}</div>
-                <div className="text-sm text-gray-400">{stats.clientsLabel || 'Happy Clients'}</div>
+                <div className="text-sm text-slate-500">{stats.clientsLabel || 'Happy Clients'}</div>
               </div>
             </div>
           </div>
@@ -123,12 +123,12 @@ export const AboutPageClient = ({ initialData }: { initialData: AboutPageData | 
         <h2 className="mb-12 text-center text-3xl font-bold">Our Values</h2>
         <div className="grid gap-8 md:grid-cols-3">
           {values.map((value) => (
-            <div key={value.title} className="rounded-2xl bg-[#0f1a2e] p-8 text-center">
+            <div key={value.title} className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
               <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-pink-500">
                 {iconMap[value.icon] || <QualityIcon />}
               </div>
               <h3 className="mb-4 text-xl font-bold">{value.title}</h3>
-              <p className="text-gray-400">{value.description}</p>
+              <p className="text-slate-600">{value.description}</p>
             </div>
           ))}
         </div>
@@ -144,4 +144,3 @@ export const AboutPageClient = ({ initialData }: { initialData: AboutPageData | 
     </div>
   )
 }
-

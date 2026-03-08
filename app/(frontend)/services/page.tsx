@@ -98,7 +98,7 @@ const ServicesPage = async () => {
         <h1 className="text-4xl md:text-5xl font-extrabold uppercase tracking-tight mb-4">
           Our Services
         </h1>
-        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+        <p className="text-xl text-slate-600 max-w-2xl mx-auto">
           We offer a full range of printing and signage solutions to help your
           brand make a lasting impression.
         </p>
@@ -141,11 +141,11 @@ const ServicesPage = async () => {
               </ul>
             </div>
             <div className="flex-1 flex justify-center">
-              <div className="bg-[#0f1a2e] p-8 rounded-2xl text-center">
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
                 <h3 className="text-xl font-bold mb-4">
                   Ready to get started?
                 </h3>
-                <p className="text-gray-400 mb-6">
+                <p className="text-slate-600 mb-6">
                   Contact us for a free quote on your{" "}
                   {service.title.toLowerCase()} project.
                 </p>

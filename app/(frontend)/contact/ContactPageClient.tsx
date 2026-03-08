@@ -70,11 +70,11 @@ export const ContactPageClient = ({ initialData }: { initialData: ContactPageDat
     <div className="mx-auto max-w-7xl px-6 py-16">
       <div className="mb-16 text-center">
         <h1 className="mb-4 text-4xl font-extrabold uppercase tracking-tight md:text-5xl">{pageTitle}</h1>
-        <p className="mx-auto max-w-2xl text-xl text-gray-300">{pageSubtitle}</p>
+        <p className="mx-auto max-w-2xl text-xl text-slate-600">{pageSubtitle}</p>
       </div>
 
       <div className="grid gap-12 md:grid-cols-2">
-        <div className="rounded-2xl bg-[#0f1a2e] p-8">
+        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
           <h2 className="mb-6 text-2xl font-bold">{formTitle}</h2>
           <ContactForm serviceOptions={serviceOptions} />
         </div>
@@ -104,13 +104,13 @@ export const ContactPageClient = ({ initialData }: { initialData: ContactPageDat
             </div>
           </div>
 
-          <div className="rounded-2xl bg-[#0f1a2e] p-8">
+          <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
             <h2 className="mb-6 text-2xl font-bold">{businessHoursTitle}</h2>
             <div className="space-y-3">
               {businessHours.map((item) => (
                 <div key={item.days} className="flex justify-between">
-                  <span className="text-gray-400">{item.days}</span>
-                  <span className={item.isClosed ? 'text-pink-400' : ''}>{item.hours}</span>
+                  <span className="text-slate-500">{item.days}</span>
+                  <span className={item.isClosed ? 'text-pink-500' : 'text-slate-700'}>{item.hours}</span>
                 </div>
               ))}
             </div>
@@ -120,4 +120,3 @@ export const ContactPageClient = ({ initialData }: { initialData: ContactPageDat
     </div>
   )
 }
-

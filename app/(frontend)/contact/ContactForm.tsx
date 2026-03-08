@@ -57,7 +57,7 @@ const ContactForm = ({ serviceOptions }: ContactFormProps) => {
           value={formData.name}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 bg-[#1a2b4b] border border-gray-600 rounded-lg focus:outline-none focus:border-pink-500 transition"
+          className="w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 transition placeholder:text-slate-400 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-100"
           placeholder="Your name"
         />
       </div>
@@ -73,7 +73,7 @@ const ContactForm = ({ serviceOptions }: ContactFormProps) => {
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 bg-[#1a2b4b] border border-gray-600 rounded-lg focus:outline-none focus:border-pink-500 transition"
+          className="w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 transition placeholder:text-slate-400 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-100"
           placeholder="your@email.com"
         />
       </div>
@@ -88,7 +88,7 @@ const ContactForm = ({ serviceOptions }: ContactFormProps) => {
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          className="w-full px-4 py-3 bg-[#1a2b4b] border border-gray-600 rounded-lg focus:outline-none focus:border-pink-500 transition"
+          className="w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 transition placeholder:text-slate-400 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-100"
           placeholder="Your phone number"
         />
       </div>
@@ -105,7 +105,7 @@ const ContactForm = ({ serviceOptions }: ContactFormProps) => {
           name="service"
           value={formData.service}
           onChange={handleChange}
-          className="w-full px-4 py-3 bg-[#1a2b4b] border border-gray-600 rounded-lg focus:outline-none focus:border-pink-500 transition"
+          className="w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 transition focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-100"
         >
           <option value="">Select a service</option>
           {serviceOptions.map((option) => (
@@ -130,7 +130,7 @@ const ContactForm = ({ serviceOptions }: ContactFormProps) => {
           onChange={handleChange}
           required
           rows={5}
-          className="w-full px-4 py-3 bg-[#1a2b4b] border border-gray-600 rounded-lg focus:outline-none focus:border-pink-500 transition resize-none"
+          className="w-full resize-none rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 transition placeholder:text-slate-400 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-100"
           placeholder="Tell us about your project..."
         />
       </div>
