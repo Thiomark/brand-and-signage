@@ -192,13 +192,11 @@ export const HomePageClient = ({ initialData }: { initialData: HomePageData | nu
               isLoaded ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
             }`}
           >
-            <span className="headline-bounce">
+            <span className="headline-bounce bg-gradient-to-r from-blue-600 via-blue-500 to-pink-500 bg-clip-text text-transparent">
               {headline.includes('PRINTING SHOP') ? (
                 <>
                   YOUR ONE STOP <br />
-                  <span className="bg-gradient-to-r from-blue-600 to-pink-500 bg-clip-text text-transparent">
-                    PRINTING SHOP.
-                  </span>
+                  PRINTING SHOP.
                 </>
               ) : (
                 headline
