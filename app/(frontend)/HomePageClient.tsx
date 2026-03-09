@@ -26,6 +26,16 @@ interface HomePageData {
     description: string
     variant: 'blue' | 'pink'
   }>
+  installationSection?: {
+    title?: string
+    description?: string
+    projects?: Array<{
+      eyebrow?: string
+      title?: string
+      category?: string
+      image?: MediaValue | string
+    }>
+  }
 }
 
 type HeroImage = {
@@ -34,6 +44,8 @@ type HeroImage = {
   externalUrl?: string
   alt?: string
 }
+
+type ResolvableImage = HeroImage | MediaValue | string
 
 const PrinterIcon = () => (
   <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,13 +86,21 @@ const iconMap: Record<string, React.ReactNode> = {
   building: <BuildingIcon />,
 }
 
-const resolveImageUrl = (heroImage: HeroImage) => {
-  if (heroImage.imageUrl) return heroImage.imageUrl
-  if (heroImage.externalUrl) return heroImage.externalUrl
-  if (typeof heroImage.image === 'string') return heroImage.image
-  if (heroImage.image?.cloudinaryUrl) return heroImage.image.cloudinaryUrl
-  if (heroImage.image?.secure_url) return heroImage.image.secure_url
-  if (heroImage.image?.url) return heroImage.image.url
+const resolveImageUrl = (imageValue?: ResolvableImage) => {
+  if (!imageValue) return ''
+  if (typeof imageValue === 'string') return imageValue
+  if ('imageUrl' in imageValue && imageValue.imageUrl) return imageValue.imageUrl
+  if ('externalUrl' in imageValue && imageValue.externalUrl) return imageValue.externalUrl
+  if ('image' in imageValue) {
+    if (typeof imageValue.image === 'string') return imageValue.image
+    if (imageValue.image?.cloudinaryUrl) return imageValue.image.cloudinaryUrl
+    if (imageValue.image?.secure_url) return imageValue.image.secure_url
+    if (imageValue.image?.url) return imageValue.image.url
+  }
+  const mediaValue = imageValue as MediaValue
+  if (mediaValue.cloudinaryUrl) return mediaValue.cloudinaryUrl
+  if (mediaValue.secure_url) return mediaValue.secure_url
+  if (mediaValue.url) return mediaValue.url
   return ''
 }
 
@@ -104,15 +124,29 @@ export const HomePageClient = ({ initialData }: { initialData: HomePageData | nu
     data?.subheadline ||
     'From custom vinyl stickers to massive industrial signage, we provide the mounting and precision your business deserves.'
   const serviceCards = data?.serviceCards || []
-  const installationProjects = useMemo(
-    () =>
-      Array.from({ length: 4 }, (_, index) => ({
-        title: `Project 0${index + 1}`,
-        category: 'Business Branding',
-        image: heroImages[index % (heroImages.length || 1)],
-      })),
-    [heroImages],
-  )
+  const installationTitle = data?.installationSection?.title || 'Precision Installation'
+  const installationDescription =
+    data?.installationSection?.description ||
+    "We don't just print — we mount. Our team handles professional application on glass, metal, and wood."
+  const installationProjects = useMemo(() => {
+    const cmsProjects = data?.installationSection?.projects || []
+
+    if (cmsProjects.length > 0) {
+      return cmsProjects.map((project, index) => ({
+        eyebrow: project.eyebrow || 'Signage project',
+        title: project.title || `Project 0${index + 1}`,
+        category: project.category || 'Business Branding',
+        image: project.image || heroImages[index % (heroImages.length || 1)],
+      }))
+    }
+
+    return Array.from({ length: 4 }, (_, index) => ({
+      eyebrow: 'Signage project',
+      title: `Project 0${index + 1}`,
+      category: 'Business Branding',
+      image: heroImages[index % (heroImages.length || 1)],
+    }))
+  }, [data?.installationSection?.projects, heroImages])
 
   return (
     <div className="overflow-x-hidden">
@@ -220,10 +254,8 @@ export const HomePageClient = ({ initialData }: { initialData: HomePageData | nu
       <section className="bg-slate-50 py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-16 max-w-xl">
-            <h2 className="mb-4 text-4xl font-black uppercase text-blue-900">Precision Installation</h2>
-            <p className="text-lg text-slate-500">
-              We don&apos;t just print — we mount. Our team handles professional application on glass, metal, and wood.
-            </p>
+            <h2 className="mb-4 text-4xl font-black uppercase text-blue-900">{installationTitle}</h2>
+            <p className="text-lg text-slate-500">{installationDescription}</p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -249,7 +281,7 @@ export const HomePageClient = ({ initialData }: { initialData: HomePageData | nu
 
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-950/85 via-blue-900/20 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-8 text-white">
-                    <p className="mb-1 text-xs font-black uppercase tracking-[0.25em]">Signage project</p>
+                    <p className="mb-1 text-xs font-black uppercase tracking-[0.25em]">{project.eyebrow}</p>
                     <p className="mb-1 text-xl font-black uppercase">{project.title}</p>
                     <p className="font-bold text-white/90">{project.category}</p>
                   </div>

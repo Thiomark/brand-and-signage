@@ -97,5 +97,78 @@ export const HomePage: GlobalConfig = {
         },
       ],
     },
+    {
+      name: 'installationSection',
+      type: 'group',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'Precision Installation',
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          defaultValue:
+            "We don't just print — we mount. Our team handles professional application on glass, metal, and wood.",
+        },
+        {
+          name: 'projects',
+          type: 'array',
+          maxRows: 4,
+          admin: {
+            description: 'Manage the project cards shown in the Precision Installation section.',
+          },
+          fields: [
+            {
+              name: 'eyebrow',
+              type: 'text',
+              defaultValue: 'Signage project',
+              required: true,
+            },
+            {
+              name: 'title',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'category',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                description: 'Upload or select the image for this project card.',
+              },
+            },
+          ],
+          defaultValue: [
+            {
+              eyebrow: 'Signage project',
+              title: 'Project 01',
+              category: 'Business Branding',
+            },
+            {
+              eyebrow: 'Signage project',
+              title: 'Project 02',
+              category: 'Business Branding',
+            },
+            {
+              eyebrow: 'Signage project',
+              title: 'Project 03',
+              category: 'Business Branding',
+            },
+            {
+              eyebrow: 'Signage project',
+              title: 'Project 04',
+              category: 'Business Branding',
+            },
+          ],
+        },
+      ],
+    },
   ],
 }
