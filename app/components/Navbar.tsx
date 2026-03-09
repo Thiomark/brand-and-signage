@@ -41,7 +41,16 @@ const Navbar = ({
                 sizes="44px"
               />
             </div>
-          ) : null}
+          ) : (
+            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-blue-600 text-lg font-black text-white shadow-sm">
+              BS
+            </div>
+          )}
+          <div className="leading-none">
+            <span className="block text-lg font-black uppercase tracking-tight text-blue-900">
+              {siteName}
+            </span>
+          </div>
         </Link>
 
         <div className="hidden items-center space-x-8 text-sm font-bold uppercase tracking-wider md:flex">
